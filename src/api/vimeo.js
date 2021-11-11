@@ -17,13 +17,14 @@ const client = new Vimeo(
 /* ============================================================================
  * Search video
  * ========================================================================= */
-const search = async term => {
+const search = async (term, page = 1) => {
   return new Promise((resolve, reject) => {
     client.request(
       {
         method: 'GET',
         path: '/videos',
         query: {
+          page,
           per_page: 5,
           query: term
         }
@@ -39,8 +40,6 @@ const search = async term => {
 
   )
 };
-
-search('heilung').then(data => console.log(data));
 
 const exports = { search };
 /* ============================================================================

@@ -1,0 +1,17 @@
+.video-pager {
+    cursor: pointer;
+    display: flex;
+}
+
+.button.pager {
+    padding: 4px;
+    width: 30px;
+}
+
+.pager-text {
+    width: 100%;
+    text-align: center;
+    margin: 'auto';
+    color: #777;
+    font-size: 80%;
+}

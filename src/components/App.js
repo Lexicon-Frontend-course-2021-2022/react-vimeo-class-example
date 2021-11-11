@@ -27,19 +27,39 @@ class App extends React.Component {
 
     super(props);
 
-    this.state = { videos: [], selected: null };
+    this.state = {
+      videos: [], selected: null, pagers: null
+    };
 
   }
 
 
   /** @brief onTermSubmit */
-  onSearchFormSubmit = term => {
+  onSearchFormSubmit = (term, page = 1) => {
 
-    vimeo.search(term)
+    vimeo.search(term, page)
       .then(res => {
+
+        /* Create pager data */
+        const pagers = {};
+
+        ["next", "previous", "first", "last"].forEach(item => {
+
+          const url = new URL('http://nowhere' + res.paging[item]);
+
+          if (res.paging[item]) {
+            pagers[item] = parseInt(url.searchParams.get('page'));
+          } else {
+            pagers[item] = null;
+          }
+        });
+        pagers.term = term;
+        pagers.page = page;
+
         this.setState({
           videos: res.data,
-          selected: res.data[0]
+          selected: res.data[0],
+          pagers
         });
       })
       .catch(err => {
@@ -58,8 +78,6 @@ class App extends React.Component {
   /** @brief Render component */
   render() {
 
-    console.log("Render: ", this.state);
-
     return (
       <div className="ui container">
         <SearchBar onFormSubmit={this.onSearchFormSubmit} />
@@ -71,7 +89,7 @@ class App extends React.Component {
             </div>
 
             <div className="five wide column">
-              <VideoItems onVideoSelect={this.onVideoSelect} videos={this.state.videos} />
+              <VideoItems onPage={this.onSearchFormSubmit} onVideoSelect={this.onVideoSelect} pagers={this.state.pagers} videos={this.state.videos} />
             </div>
 
           </div>

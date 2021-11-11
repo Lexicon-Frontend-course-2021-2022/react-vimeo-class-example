@@ -1,0 +1,7 @@
+.video-item {
+    cursor: pointer;
+}
+
+.video-item:hover {
+    background-color: #ccc;
+}
