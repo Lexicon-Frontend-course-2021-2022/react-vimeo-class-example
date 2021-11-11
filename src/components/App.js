@@ -43,8 +43,7 @@ class App extends React.Component {
         /* Create pager data */
         const pagers = {};
 
-        ["next", "previous", "first", "last"].forEach(item => {
-
+        for (const item in res.paging) {
           const url = new URL('http://nowhere' + res.paging[item]);
 
           if (res.paging[item]) {
@@ -52,7 +51,8 @@ class App extends React.Component {
           } else {
             pagers[item] = null;
           }
-        });
+        }
+
         pagers.term = term;
         pagers.page = page;
 
