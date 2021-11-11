@@ -33,6 +33,7 @@ const search = async (term, page = 1) => {
         if (error) {
           reject(error);
         }
+        console.log(body);
         resolve(body);
       }
     );

@@ -2,7 +2,8 @@
  * Imports
  * ========================================================================= */
 import React from 'react';
-//import DOMPurify from 'DOMPurify'
+
+import './VideoDetail.css';
 
 /* ============================================================================
  * Function Component
@@ -13,24 +14,33 @@ const VideoDetail = ({ video }) => {
     return <div>Loading...</div>;
   }
 
-  // const videoSource = `https://youtube.com/embed/${video.id.videoId}`;
-
   return (
     <div>
 
-      <div className="ui embed"
-        dangerouslySetInnerHTML={{ __html: video.embed.html }}
-      >
-
-        {/* <iframe src={videoSource} title={video.snippet.title} /> */}
-      </div>
+      <div className="ui embed" dangerouslySetInnerHTML={{ __html: video.embed.html }} />
 
       <div className="ui segment">
-        <h4 className="ui header">{video.name}</h4>
+
+        <div className="ui grid">
+          <div className="ui row">
+
+            <div className="two wide column">
+              <div className="user-icon" style={{ backgroundImage: `url(${video.user.pictures.base_link})` }} />
+            </div>
+
+            <div className="eleven wide column">
+              <h4 className="ui header">
+                {video.name}
+              </h4>
+              <p className="user-name">{video.user.name}</p>
+            </div>
+          </div>
+
+        </div>
+
         <p>{video.description}</p>
       </div>
-
-    </div>
+    </div >
   );
 };
 /* ============================================================================
