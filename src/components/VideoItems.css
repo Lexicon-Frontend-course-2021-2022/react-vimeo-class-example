@@ -3,11 +3,6 @@
     display: flex;
 }
 
-.button.pager {
-    padding: 4px;
-    width: 30px;
-}
-
 .pager-text {
     width: 100%;
     text-align: center;

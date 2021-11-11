@@ -25,10 +25,10 @@ const VideoItems = ({ videos, pagers, onPage, onVideoSelect }) => {
     // onClick={() => onPage(pagers.term, pagers.next)}>&lt;&lt;</div>
 
     const mapping = {
-      'first': '<<',
-      'previous': '<',
-      'next': '>',
-      'last': '>>'
+      'first': 'fast backward',
+      'previous': 'backward',
+      'next': 'forward',
+      'last': 'fast forward'
     }
 
     const renderButton = (item) => {
@@ -46,12 +46,10 @@ const VideoItems = ({ videos, pagers, onPage, onVideoSelect }) => {
       }
 
       if (disabled) {
-        return <div className={`ui button pager disabled`}>{mapping[item]}</div>
+        return <i className={`${mapping[item]} icon blue disabled`} />
       } else {
         return (
-          <div className={`ui button pager blue`}
-            onClick={() => onPage(pagers.term, pagers[item])}
-          >{mapping[item]}</div>
+          <i className={`${mapping[item]} icon blue`} onClick={() => onPage(pagers.term, pagers[item])} />
         );
       }
     };
