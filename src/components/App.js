@@ -43,17 +43,20 @@ class App extends React.Component {
         /* Create pager data */
         const pagers = {};
 
+        /* Stash first, previous, next, last */
         for (const item in res.paging) {
           const url = new URL('http://nowhere' + res.paging[item]);
 
-          if (res.paging[item]) {
-            pagers[item] = parseInt(url.searchParams.get('page'));
-          } else {
-            pagers[item] = null;
-          }
+          pagers[item] = res.paging[item] ?
+            parseInt(url.searchParams.get('page'))
+            : null;
+
         }
 
+        /* Stash current search term */
         pagers.term = term;
+
+        /* Stash current page */
         pagers.page = page;
 
         this.setState({

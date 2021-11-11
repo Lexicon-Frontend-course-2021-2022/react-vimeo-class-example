@@ -12,50 +12,42 @@ import './VideoItems.css';
 const VideoItems = ({ videos, pagers, onPage, onVideoSelect }) => {
 
   const renderVideos = videos.map(video => {
-
     return (
       <VideoItem key={video.resource_key} onVideoSelect={onVideoSelect} video={video} />
     );
-
   });
 
-  const renderPagers = (pagers) => {
+  const renderButtons = (pagers) => {
 
-    // <div className="ui button pager blue"
-    // onClick={() => onPage(pagers.term, pagers.next)}>&lt;&lt;</div>
-
-    const mapping = {
-      'first': 'fast backward',
-      'previous': 'backward',
-      'next': 'forward',
-      'last': 'fast forward'
-    }
-
+    /** @brief Render one button */
     const renderButton = (item) => {
 
-      let disabled = false;
-
-      /* Disable pagers 'first' and 'previous' if first page */
-      if ((item === 'first' || item === 'previous') && pagers.page === 1) {
-        disabled = true;
+      const icons = {
+        'first': 'fast backward',
+        'previous': 'backward',
+        'next': 'forward',
+        'last': 'fast forward'
       }
 
-      /* Disable pagers 'next' and 'last' if last page */
-      if ((item === 'last' || item === 'next') && pagers.page === pagers.last) {
-        disabled = true;
-      }
+      /* Return enabled or disabled pager button */
+      return (
+        ( /* Disable pagers 'first' and 'previous' if on first page */
+          ['first', 'previous'].indexOf(item) >= 0
+          && pagers.page === pagers.first
+        ) ||
+        ( /* Disable pagers 'next' and 'last' if on last page */
+          ['last', 'next'].indexOf(item) >= 0
+          && pagers.page === pagers.last
+        )
+      )
+        ? <i className={`${icons[item]} icon blue disabled`} />
+        : <i className={`${icons[item]} icon blue`} onClick={() => onPage(pagers.term, pagers[item])} />;
 
-      if (disabled) {
-        return <i className={`${mapping[item]} icon blue disabled`} />
-      } else {
-        return (
-          <i className={`${mapping[item]} icon blue`} onClick={() => onPage(pagers.term, pagers[item])} />
-        );
-      }
     };
 
-    if (pagers) {
-      return (
+    /* Render buttons _IF_ we have pager info */
+    return pagers ?
+      (
         <div className="video-pager">
           {renderButton('first')}
           {renderButton('previous')}
@@ -63,16 +55,14 @@ const VideoItems = ({ videos, pagers, onPage, onVideoSelect }) => {
           {renderButton('next')}
           {renderButton('last')}
         </div >
-      );
-    } else {
-      return;
-    }
+      )
+      : '';
 
   };
 
   return (
     <div>
-      {renderPagers(pagers)}
+      {renderButtons(pagers)}
 
       <div className="ui relaxed divided list">{renderVideos}</div>
     </div >

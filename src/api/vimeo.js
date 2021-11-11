@@ -18,27 +18,30 @@ const client = new Vimeo(
  * Search video
  * ========================================================================= */
 const search = async (term, page = 1) => {
-  return new Promise((resolve, reject) => {
-    client.request(
-      {
-        method: 'GET',
-        path: '/videos',
-        query: {
-          page,
-          per_page: 5,
-          query: term
-        }
-      },
-      (error, body, status_code, headers) => {
-        if (error) {
-          reject(error);
-        }
-        console.log(body);
-        resolve(body);
-      }
-    );
-  }
 
+  return new Promise(
+
+    (resolve, reject) => {
+      client.request(
+        {
+          method: 'GET',
+          path: '/videos',
+          query: {
+            page,
+            per_page: 5,
+            query: term
+          }
+        },
+
+        (error, body, status_code, headers) => {
+          if (error) {
+            reject(error);
+          }
+          console.log(body);
+          resolve(body);
+        }
+      );
+    }
   )
 };
 
