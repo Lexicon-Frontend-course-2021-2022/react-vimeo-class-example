@@ -28,7 +28,7 @@ const VideoDetail = ({ video }) => {
               <div className="user-icon" style={{ backgroundImage: `url(${video.user.pictures.base_link})` }} />
             </div>
 
-            <div className="eleven wide column">
+            <div className="fourteen wide column">
               <h4 className="ui header">
                 {video.name}
               </h4>
